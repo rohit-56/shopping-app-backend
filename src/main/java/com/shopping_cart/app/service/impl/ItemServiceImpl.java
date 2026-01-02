@@ -32,7 +32,7 @@ public class ItemServiceImpl implements IItemService {
     @Override
     public ItemResponse getItemById(Long itemId) {
         Optional<ItemEntity> itemEntity=itemEntityRepository.findById(itemId);
-        if(itemEntity.get()==null){
+        if(itemEntity.isEmpty()){
             return null;
         }
         else {
