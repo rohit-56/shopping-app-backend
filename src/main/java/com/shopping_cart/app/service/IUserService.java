@@ -3,13 +3,12 @@ package com.shopping_cart.app.service;
 import com.shopping_cart.app.http.request.LoginRequest;
 import com.shopping_cart.app.http.request.UserEntityRequest;
 import com.shopping_cart.app.http.response.UserEntityResponse;
-import com.shopping_cart.app.model.UserEntity;
 
 public interface IUserService {
 
-    public UserEntityResponse createUser(UserEntityRequest userEntityRequest);
+  public UserEntityResponse createUser(UserEntityRequest userEntityRequest);
 
-    public UserEntityResponse getUserById(Long userId);
+  public UserEntityResponse getUserById(Long userId);
 
-    public boolean validateUser(LoginRequest loginRequest);
+  public boolean validateUser(LoginRequest loginRequest);
 }

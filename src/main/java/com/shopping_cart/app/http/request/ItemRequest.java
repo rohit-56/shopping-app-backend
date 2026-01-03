@@ -5,14 +5,13 @@ import lombok.Getter;
 @Getter
 public class ItemRequest {
 
-    public String itemName;
+  public String itemName;
 
-    public String category;
+  public String category;
 
-    public String description;
+  public String description;
 
-    public double amount;
+  public double amount;
 
-    public float rating;
-
+  public float rating;
 }

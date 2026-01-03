@@ -5,16 +5,15 @@ import lombok.Setter;
 @Setter
 public class ItemResponse {
 
-    public Long itemId;
+  public Long itemId;
 
-    public String itemName;
+  public String itemName;
 
-    public String category;
+  public String category;
 
-    public String description;
+  public String description;
 
-    public double amount;
+  public double amount;
 
-    public float rating;
-
+  public float rating;
 }

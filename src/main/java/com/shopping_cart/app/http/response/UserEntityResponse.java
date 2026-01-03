@@ -5,16 +5,15 @@ import lombok.Setter;
 @Setter
 public class UserEntityResponse {
 
-    public Long Id;
+  public Long Id;
 
-    public String name;
+  public String name;
 
-    public String email;
+  public String email;
 
-    public String location;
+  public String location;
 
-    public String username;
+  public String username;
 
-    public long number;
-
+  public long number;
 }
