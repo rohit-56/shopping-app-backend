@@ -15,30 +15,33 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class UserController {
 
-    private IUserService userService;
+  private IUserService userService;
 
-    public UserController(IUserService userService){
-        this.userService = userService;
+  public UserController(IUserService userService) {
+    this.userService = userService;
+  }
+
+  @PostMapping("/signup")
+  public ResponseEntity<UserEntityResponse> registerUser(
+      @RequestBody UserEntityRequest userEntityRequest) {
+    log.info(userEntityRequest.getName());
+    UserEntityResponse userEntityResponse = userService.createUser(userEntityRequest);
+    return new ResponseEntity<>(userEntityResponse, HttpStatus.CREATED);
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
+    log.info(
+        "Login Username : "
+            + loginRequest.getUsername()
+            + " and password is: "
+            + loginRequest.getPassword());
+    boolean isValidUser = userService.validateUser(loginRequest);
+
+    if (isValidUser) {
+      return new ResponseEntity<>("Login Successfully", HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>("Login Failed", HttpStatus.BAD_REQUEST);
     }
-
-    @PostMapping("/signup")
-    public ResponseEntity<UserEntityResponse> registerUser(@RequestBody UserEntityRequest userEntityRequest){
-        log.info(userEntityRequest.getName());
-        UserEntityResponse userEntityResponse=userService.createUser(userEntityRequest);
-        return new ResponseEntity<>(userEntityResponse, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest){
-        log.info("Login Username : "+loginRequest.getUsername()+" and password is: "+loginRequest.getPassword());
-        boolean isValidUser = userService.validateUser(loginRequest);
-
-        if(isValidUser) {
-            return new ResponseEntity<>("Login Successfully", HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>("Login Failed",HttpStatus.BAD_REQUEST);
-        }
-
-    }
+  }
 }

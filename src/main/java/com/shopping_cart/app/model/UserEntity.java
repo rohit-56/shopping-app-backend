@@ -14,28 +14,29 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long Id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  public Long Id;
 
-    public String name;
+  public String name;
 
-    public String email;
+  public String email;
 
-    public String location;
+  public String location;
 
-    public String username;
+  public String username;
 
-    public String password;
+  public String password;
 
-    public long number;
+  public long number;
 
-    public UserEntity(String name, String email, String location, String username, String password, long number) {
-        this.name = name;
-        this.email = email;
-        this.location = location;
-        this.username = username;
-        this.password = password;
-        this.number = number;
-    }
+  public UserEntity(
+      String name, String email, String location, String username, String password, long number) {
+    this.name = name;
+    this.email = email;
+    this.location = location;
+    this.username = username;
+    this.password = password;
+    this.number = number;
+  }
 }
