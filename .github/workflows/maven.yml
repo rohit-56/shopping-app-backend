@@ -27,10 +27,10 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+    - name: Give execute permission to mvnw
+      run: chmod +x ./mvnw      
     - name: Validate code formatting with Spotless Check
       run: ./mvnw spotless:check
-    - name: Give execute permission to mvnw
-      run: chmod +x ./mvnw  
     - name: Build with Maven
       run: ./mvnw clean install
     - name: Build with Maven
