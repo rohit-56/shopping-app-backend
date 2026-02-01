@@ -25,4 +25,6 @@ public class ItemEntity {
   public double amount;
 
   public float rating;
+
+  // public MultipartFile itemImage;
 }
