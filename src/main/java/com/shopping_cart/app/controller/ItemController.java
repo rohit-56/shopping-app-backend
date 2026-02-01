@@ -3,7 +3,6 @@ package com.shopping_cart.app.controller;
 import com.shopping_cart.app.http.request.ItemRequest;
 import com.shopping_cart.app.http.response.ItemResponse;
 import com.shopping_cart.app.service.IItemService;
-
 import java.io.Serializable;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -24,7 +23,7 @@ public class ItemController implements Serializable {
 
   @PostMapping(value = "/create-item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<ItemResponse> createItem(@ModelAttribute ItemRequest itemRequest) {
-  //  System.out.println(itemRequest.getItemImage().getName());
+    //  System.out.println(itemRequest.getItemImage().getName());
     ItemResponse itemResponse = itemService.createItem(itemRequest);
     return new ResponseEntity<>(itemResponse, HttpStatus.CREATED);
   }
