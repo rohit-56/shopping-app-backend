@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Setter
@@ -25,4 +26,6 @@ public class ItemEntity {
   public double amount;
 
   public float rating;
+
+ // public MultipartFile itemImage;
 }
