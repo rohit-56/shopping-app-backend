@@ -62,4 +62,9 @@ public class UserServiceImpl implements IUserService {
 
     return true;
   }
+
+  @Override
+  public UserEntityResponse getUserByEmail(String email) {
+    return null;
+  }
 }
