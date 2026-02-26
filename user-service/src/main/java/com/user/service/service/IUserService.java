@@ -11,8 +11,10 @@ public interface IUserService {
 
   public UserEntityResponse getUserById(Long userId);
 
-  public boolean validateUser(LoginRequest loginRequest);
+  public String validateUserAndGetToken(LoginRequest loginRequest);
 
   public UserEntityResponse getUserByEmail(String email);
+
+  public boolean validateToken(String token);
 }
 
