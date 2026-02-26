@@ -9,11 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
 @RequestMapping("/user")
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
   private IUserService userService;
@@ -36,15 +37,28 @@ public class UserController {
   public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
     log.info(
         "Login Username : "
-            + loginRequest.getUsername()
+            + loginRequest.getEmail()
             + " and password is: "
             + loginRequest.getPassword());
-    boolean isValidUser = userService.validateUser(loginRequest);
 
-    if (isValidUser) {
-      return new ResponseEntity<>("Login Successfully", HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>("Login Failed", HttpStatus.BAD_REQUEST);
+    String token = userService.validateUserAndGetToken(loginRequest);
+
+    return new ResponseEntity<>(token, HttpStatus.OK);
+  }
+
+  @GetMapping("/validate-token")
+  public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String header) {
+
+    if (header==null || !header.startsWith("Bearer ")) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
+    }
+
+    boolean checkToken = userService.validateToken(header.substring(7));
+    if (checkToken) {
+      return new ResponseEntity<>("SUCCESS",HttpStatus.OK);
+    }
+    else {
+      return new ResponseEntity<>("Invalid Token",HttpStatus.UNAUTHORIZED);
     }
   }
 }
