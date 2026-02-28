@@ -1,5 +1,6 @@
 package com.shopping_cart.app.model;
 
+import com.shopping_cart.app.common.enums.CategoryType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class ItemEntity {
 
   public String itemName;
 
-  public String category;
+  public CategoryType categoryType;
 
   public String description;
 
