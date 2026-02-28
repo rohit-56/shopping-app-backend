@@ -1,19 +1,21 @@
 package com.shopping_cart.app.http.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
-@Setter
 public class ItemRequest {
 
+  @NotBlank(message = "Item Name is Required")
   public String itemName;
 
-  public String category;
+  @NotBlank(message = "Category is Required")
+  public String categoryType;
 
   public String description;
 
+  @NotBlank(message = "Amount is Required")
   public double amount;
 
   public float rating;
