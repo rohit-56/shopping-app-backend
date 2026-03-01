@@ -1,11 +1,13 @@
 package com.shopping_cart.app.controller;
 
+import com.shopping_cart.app.common.enums.CategoryType;
 import com.shopping_cart.app.http.request.ItemRequest;
 import com.shopping_cart.app.http.response.ItemResponse;
 import com.shopping_cart.app.service.IItemService;
 import com.shopping_cart.app.service.ImageService;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -50,5 +52,15 @@ public class ItemController implements Serializable {
   public ResponseEntity<String> deleteItemById(@PathVariable Long itemId) {
     itemService.deleteItemById(itemId);
     return new ResponseEntity<>("Item Deleted for Id : " + itemId, HttpStatus.ACCEPTED);
+  }
+
+  @GetMapping("/getAllCategory")
+  public ResponseEntity<List<String>> getAllCategories() {
+    CategoryType[] list = CategoryType.values();
+    List<String> categoryList = new ArrayList<>();
+    for (CategoryType category : list) {
+      categoryList.add(category.getCategoryType());
+    }
+    return new ResponseEntity<>(categoryList, HttpStatus.OK);
   }
 }
