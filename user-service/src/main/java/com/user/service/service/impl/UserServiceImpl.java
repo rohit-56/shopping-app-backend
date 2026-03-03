@@ -3,7 +3,11 @@ package com.user.service.service.impl;
 import com.user.service.common.enums.USER_ENTITY_ROLE;
 import com.user.service.common.mapper.UserEntityMapper;
 import com.user.service.dto.LoginRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.user.service.dto.UserEntityRequest;
 import com.user.service.dto.UserEntityResponse;
@@ -92,5 +96,12 @@ public class UserServiceImpl implements IUserService {
     } catch (RuntimeException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public List<UserEntityResponse> getAllUserEntities() {
+    List<UserEntity> userEntities = userEntityRepository.findAll();
+    List<UserEntityResponse> userEntityResponseList = userEntities.stream().map(UserEntityMapper.fromUserEntityToUserEntityResponse).toList();
+    return userEntityResponseList;
   }
 }
