@@ -5,6 +5,8 @@ import com.user.service.dto.LoginRequest;
 import com.user.service.dto.UserEntityRequest;
 import com.user.service.dto.UserEntityResponse;
 
+import java.util.List;
+
 public interface IUserService {
 
   public UserEntityResponse createUser(UserEntityRequest userEntityRequest);
@@ -16,5 +18,7 @@ public interface IUserService {
   public UserEntityResponse getUserByEmail(String email);
 
   public boolean validateToken(String token);
+
+  public List<UserEntityResponse> getAllUserEntities();
 }
 

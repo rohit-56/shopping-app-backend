@@ -1,6 +1,7 @@
 package com.user.service.controller;
 
 import com.user.service.dto.LoginRequest;
+import com.user.service.dto.LoginResponse;
 import com.user.service.dto.UserEntityRequest;
 import com.user.service.dto.UserEntityResponse;
 import com.user.service.service.IUserService;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 
 @RestController
@@ -34,7 +37,7 @@ public class UserController {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
+  public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginRequest) {
     log.info(
         "Login Username : "
             + loginRequest.getEmail()
@@ -42,8 +45,9 @@ public class UserController {
             + loginRequest.getPassword());
 
     String token = userService.validateUserAndGetToken(loginRequest);
-
-    return new ResponseEntity<>(token, HttpStatus.OK);
+    LoginResponse loginResponse = new LoginResponse();
+    loginResponse.setToken(token);
+    return new ResponseEntity<>(loginResponse, HttpStatus.OK);
   }
 
   @GetMapping("/validate-token")
@@ -60,5 +64,11 @@ public class UserController {
     else {
       return new ResponseEntity<>("Invalid Token",HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  @GetMapping("get-all")
+  public ResponseEntity<List<UserEntityResponse>> getAllUsers() {
+    List<UserEntityResponse> userEntityResponseList = userService.getAllUserEntities();
+    return new ResponseEntity<>(userEntityResponseList, HttpStatus.OK);
   }
 }

@@ -1,0 +1,27 @@
+
+server:
+  port: 4001
+
+spring:
+  application:
+    name: apigateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service-route
+          uri: http://auth-service:4005
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
+
+        # Route for /api/items/** to item-service
+        - id: item-service-route
+          uri: http://patient-service:4000
+          predicates:
+            - Path=/api/items/**
+          filters:
+            - StripPrefix=1
+            - JwtValidation
+
+
