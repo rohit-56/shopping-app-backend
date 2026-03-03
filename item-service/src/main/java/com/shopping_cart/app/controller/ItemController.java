@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/items")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ItemController implements Serializable {
 
