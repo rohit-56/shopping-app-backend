@@ -1,6 +1,6 @@
-
 server:
   port: 4001
+
 
 spring:
   application:
@@ -9,19 +9,19 @@ spring:
     gateway:
       routes:
         - id: user-service-route
-          uri: http://auth-service:4005
+          uri: http://localhost:4002
           predicates:
-            - Path=/user/**
+            - Path=/api/user/**
           filters:
             - StripPrefix=1
 
         # Route for /api/items/** to item-service
         - id: item-service-route
-          uri: http://patient-service:4000
+          uri: http://localhost:4003
           predicates:
-            - Path=/api/items/**
+            - Path=/api/api/items/**
           filters:
             - StripPrefix=1
-            - JwtValidation
+
 
 
