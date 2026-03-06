@@ -1,6 +1,9 @@
 server:
   port: 4001
 
+auth:
+  service:
+    url: http://localhost:4002/user
 
 spring:
   application:
@@ -22,6 +25,7 @@ spring:
             - Path=/api/api/items/**
           filters:
             - StripPrefix=1
+            - JwtValidation
 
 
 
