@@ -51,7 +51,7 @@ public class UserController {
   }
 
   @GetMapping("/validate-token")
-  public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String header) {
+  public ResponseEntity<Void> validateToken(@RequestHeader("Authorization") String header) {
 
     if (header==null || !header.startsWith("Bearer ")) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
@@ -59,10 +59,10 @@ public class UserController {
 
     boolean checkToken = userService.validateToken(header.substring(7));
     if (checkToken) {
-      return new ResponseEntity<>("SUCCESS",HttpStatus.OK);
+      return new ResponseEntity<>(HttpStatus.OK);
     }
     else {
-      return new ResponseEntity<>("Invalid Token",HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
   }
 
