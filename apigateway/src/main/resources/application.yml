@@ -5,6 +5,22 @@ auth:
   service:
     url: http://localhost:4002/user
 
+logging:
+  pattern:
+    level: '%5p [${spring.application.name},%X{traceId:-},%X{spanId:-}]'
+  level:
+    io:
+      micrometer:
+        tracing: DEBUG
+management:
+  tracing:
+    sampling:
+      probability: '1.0'
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+
+
 spring:
   application:
     name: apigateway
