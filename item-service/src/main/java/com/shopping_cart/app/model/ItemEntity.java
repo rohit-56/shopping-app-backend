@@ -19,7 +19,7 @@ public class ItemEntity {
 
   public String itemName;
 
-  public CategoryType categoryType;
+  public String categoryType;
 
   public String description;
 

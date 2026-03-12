@@ -1,7 +1,7 @@
 package com.shopping_cart.app.common.enums;
 
 public enum CategoryType {
-  MOBILES("MOBILES"),
+  MOBILE("MOBILE"),
   LAPTOP("LAPTOP"),
   TELEVISION("TELEVISION"),
   WASHING_MACHINE("WASHING MACHINE");
