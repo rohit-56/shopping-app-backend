@@ -15,4 +15,6 @@ public interface IItemService {
   void deleteItemById(Long itemId);
 
   ItemResponse updateItem(ItemRequest itemRequest);
+
+  List<ItemResponse> getAllItems();
 }
