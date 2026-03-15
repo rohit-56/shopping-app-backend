@@ -31,7 +31,7 @@ public class UserController {
   @PostMapping("/signup")
   public ResponseEntity<UserEntityResponse> registerUser(
       @RequestBody UserEntityRequest userEntityRequest) {
-    log.info(userEntityRequest.getName());
+    log.info("Registering user: " + userEntityRequest.toString());
     UserEntityResponse userEntityResponse = userService.createUser(userEntityRequest);
     return new ResponseEntity<>(userEntityResponse, HttpStatus.CREATED);
   }
@@ -39,14 +39,13 @@ public class UserController {
   @PostMapping("/login")
   public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginRequest) {
     log.info(
-        "Login Username : "
-            + loginRequest.getEmail()
-            + " and password is: "
-            + loginRequest.getPassword());
+        "Login User : "
+            + loginRequest.getEmail());
 
     String token = userService.validateUserAndGetToken(loginRequest);
     LoginResponse loginResponse = new LoginResponse();
     loginResponse.setToken(token);
+    log.info("Token Generated Successfully");
     return new ResponseEntity<>(loginResponse, HttpStatus.OK);
   }
 
@@ -59,9 +58,11 @@ public class UserController {
 
     boolean checkToken = userService.validateToken(header.substring(7));
     if (checkToken) {
+      log.info("Token Validated Successfully");
       return new ResponseEntity<>(HttpStatus.OK);
     }
     else {
+      log.warn("Invalid token");
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
   }
@@ -69,6 +70,7 @@ public class UserController {
   @GetMapping("get-all")
   public ResponseEntity<List<UserEntityResponse>> getAllUsers() {
     List<UserEntityResponse> userEntityResponseList = userService.getAllUserEntities();
+    log.info("Ger All Users List Successfully");
     return new ResponseEntity<>(userEntityResponseList, HttpStatus.OK);
   }
 }

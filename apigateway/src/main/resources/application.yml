@@ -42,6 +42,8 @@ spring:
           filters:
             - StripPrefix=1
             - JwtValidation
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
 
 
 
