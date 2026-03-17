@@ -7,10 +7,12 @@ import com.shopping_cart.app.http.response.ItemResponse;
 import com.shopping_cart.app.model.ItemEntity;
 import com.shopping_cart.app.repository.ItemEntityRepository;
 import com.shopping_cart.app.service.IItemService;
-
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -74,9 +76,12 @@ public class ItemServiceImpl implements IItemService {
   }
 
   @Override
-  public List<ItemResponse> getAllItems() {
+  public List<ItemResponse> getAllItems(int pageNumber, int pageSize) {
     log.info("Fetching all items");
-    List<ItemEntity> itemEntityList =itemEntityRepository.findAll();
+
+    Pageable pageable = PageRequest.of(pageNumber,pageSize, Sort.by("id").ascending());
+
+    List<ItemEntity> itemEntityList = itemEntityRepository.findAll(pageable).getContent();
 
     return itemEntityList.stream().map(ItemEntityMapper.fromItemEntityToItemResponse).toList();
   }

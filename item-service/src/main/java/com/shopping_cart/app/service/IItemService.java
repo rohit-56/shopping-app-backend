@@ -16,5 +16,5 @@ public interface IItemService {
 
   ItemResponse updateItem(ItemRequest itemRequest);
 
-  List<ItemResponse> getAllItems();
+  List<ItemResponse> getAllItems(int pageNumber, int pageSize);
 }

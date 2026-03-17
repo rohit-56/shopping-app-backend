@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -74,9 +73,11 @@ public class ItemController implements Serializable {
   }
 
   @GetMapping("/getItems")
-  public  ResponseEntity<List<ItemResponse>> getAllItems() {
+  public ResponseEntity<List<ItemResponse>> getAllItems(
+      @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+      @RequestParam(value = "limit", defaultValue = "10", required = false) Integer limit) {
     log.info("Get all items");
-    List<ItemResponse> itemResponseList = itemService.getAllItems();
+    List<ItemResponse> itemResponseList = itemService.getAllItems(pageNumber, limit);
     return new ResponseEntity<>(itemResponseList, HttpStatus.OK);
   }
 }
