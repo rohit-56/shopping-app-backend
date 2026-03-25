@@ -16,4 +16,6 @@ public class ItemResponse {
   public double amount;
 
   public float rating;
+
+  public int quantity;
 }
