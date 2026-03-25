@@ -15,6 +15,7 @@ public class ItemEntityMapper {
         itemEntity.setAmount(itemRequest.getAmount());
         itemEntity.setDescription(itemRequest.getDescription());
         itemEntity.setRating(itemRequest.getRating());
+        itemEntity.setQuantity(itemRequest.getQuantity());
         return itemEntity;
       };
 
@@ -27,6 +28,7 @@ public class ItemEntityMapper {
         itemResponse.setCategory(itemEntity.categoryType);
         itemResponse.setAmount(itemEntity.getAmount());
         itemResponse.setRating(itemEntity.getRating());
+        itemResponse.setQuantity(itemEntity.getQuantity());
         return itemResponse;
       };
 }

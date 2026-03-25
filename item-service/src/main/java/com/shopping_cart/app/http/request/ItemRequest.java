@@ -20,5 +20,7 @@ public class ItemRequest {
 
   public float rating;
 
+  public int quantity;
+
   public MultipartFile itemImage;
 }
