@@ -1,4 +1,4 @@
-package com.shopping.order_service.common;
+package com.shopping.order_service.common.config;
 
 import com.shopping.order_service.entity.Cart;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import java.time.Duration;
 
 @Configuration
 public class RedisConfig {
-
+    //Prefer for using Cache annotations with spring boot
     @Bean
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
