@@ -2,7 +2,6 @@ package com.shopping.order_service.service;
 
 import com.shopping.order_service.http.request.CartRequest;
 import com.shopping.order_service.http.response.CartResponse;
-import java.util.List;
 
 
 public interface ICartService {
@@ -11,5 +10,5 @@ public interface ICartService {
 
     public boolean removeItemFromCart(CartRequest cartRequest);
 
-    public List<CartResponse> getAllCartItems(int userId);
+    public CartResponse getAllCartItems(int userId);
 }

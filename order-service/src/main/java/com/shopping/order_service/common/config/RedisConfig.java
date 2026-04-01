@@ -14,7 +14,7 @@ import java.time.Duration;
 
 @Configuration
 public class RedisConfig {
-
+    //Prefer for using Cache annotations with spring boot
     @Bean
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
