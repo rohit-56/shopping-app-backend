@@ -10,5 +10,5 @@ public interface ICartService {
 
     public boolean removeItemFromCart(CartRequest cartRequest);
 
-    public CartResponse getAllCartItems(int userId);
+    public CartResponse getAllCartItems(String userId);
 }

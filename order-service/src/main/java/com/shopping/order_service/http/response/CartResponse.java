@@ -6,7 +6,7 @@ public class CartResponse {
 
     public int cartId;
 
-    public int userId;
+    public String userId;
 
     public List<CartItemResponse> items;
 
@@ -16,7 +16,7 @@ public class CartResponse {
         this.cartId = cartId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

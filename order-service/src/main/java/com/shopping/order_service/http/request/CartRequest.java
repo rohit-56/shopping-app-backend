@@ -5,19 +5,19 @@ import jakarta.validation.constraints.NotNull;
 public class CartRequest {
 
     @NotNull(message = "User Id is Required")
-    public int userId;
+    public String userId;
 
     @NotNull(message = "Item Id is Required")
-    public int itemId;
+    public long itemId;
 
     @NotNull(message = "Quantity is Required")
     public int quantity;
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public int getItemId() {
+    public long getItemId() {
         return itemId;
     }
 

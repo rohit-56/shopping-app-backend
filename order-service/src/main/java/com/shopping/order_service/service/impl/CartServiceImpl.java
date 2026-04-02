@@ -9,6 +9,8 @@ import com.shopping.order_service.http.request.CartRequest;
 import com.shopping.order_service.http.response.CartItemResponse;
 import com.shopping.order_service.http.response.CartResponse;
 import com.shopping.order_service.service.ICartService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,9 @@ public class CartServiceImpl implements ICartService {
 
     private static final String CART_PREFIX = "cart:";
 
-    private HashMap<Integer,HashMap<Long, ItemResponse>> cartItems = new HashMap<>();
+    private static final Logger log = LoggerFactory.getLogger(CartServiceImpl.class);
+
+    private HashMap<String,HashMap<Long, ItemResponse>> cartItemsMap = new HashMap<>();
 
     public CartServiceImpl(StringRedisTemplate stringRedisTemplate, ItemServiceClient itemServiceClient) {
         this.stringRedisTemplate = stringRedisTemplate;
@@ -37,25 +41,27 @@ public class CartServiceImpl implements ICartService {
     @Override
     public boolean addItemToCart(CartRequest cartRequest) {
         Cart cart = CartMapper.fromCartRequestToCartEntity.apply(cartRequest);
-        
+
+        String key = CART_PREFIX + cart.getUserId();
         String hashId = ""+cart.getItemId();
+        log.info("Adding item to cart for user: "+cart.getUserId()+" with hashId: "+hashId);
         try {
-            stringRedisTemplate.opsForHash().increment(""+cart.getUserId(), hashId, cart.getQuantity());
-            stringRedisTemplate.expire(""+cart.getUserId(), 10, TimeUnit.MINUTES);
+            stringRedisTemplate.opsForHash().increment(key, hashId, cart.getQuantity());
+            stringRedisTemplate.expire(key, 10, TimeUnit.MINUTES);
 
-            ItemResponse itemResponse = itemServiceClient.getItemById((long)cartRequest.getItemId()).getBody();
+            ItemResponse itemResponse = itemServiceClient.getItemById(cartRequest.getItemId()).getBody();
 
-            if(cartItems.containsKey(cart.getUserId())){
-                HashMap<Long,ItemResponse> map = cartItems.get(cart.getUserId());
-                map.put((long)cart.getItemId(), itemResponse);
+            if(cartItemsMap.containsKey(cart.getUserId())){
+                HashMap<Long,ItemResponse> map = cartItemsMap.get(cart.getUserId());
+                map.put(cart.getItemId(), itemResponse);
 
-                cartItems.put(cart.getUserId(),map);
+                cartItemsMap.put(cart.getUserId(),map);
             }
             else {
                 HashMap<Long,ItemResponse> map = new HashMap<>();
-                map.put((long)cart.getItemId(), itemResponse);
+                map.put(cart.getItemId(), itemResponse);
 
-                cartItems.put(cart.getUserId(),map);
+                cartItemsMap.put(cart.getUserId(),map);
             }
 
         }catch (Exception e){
@@ -66,10 +72,14 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public boolean removeItemFromCart(CartRequest cartRequest) {
+        String key = CART_PREFIX + cartRequest.getUserId();
+        String hashIdKey = ""+cartRequest.getItemId();
+
         try{
-          Long count = stringRedisTemplate.opsForHash().delete(""+cartRequest.getUserId(),""+cartRequest.getItemId());
+          Long count = stringRedisTemplate.opsForHash().delete(key,hashIdKey);
           if(count>0){
-              cartItems.get(""+cartRequest.getUserId()).remove(""+cartRequest.getItemId());
+              log.info("Removing item from cart for user: "+cartRequest.getUserId()+" with hashId: "+hashIdKey);
+              cartItemsMap.get(cartRequest.getUserId()).remove(cartRequest.getItemId());
               return true;
           }
           else {
@@ -81,8 +91,10 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public CartResponse getAllCartItems(int  userId) {
-        Map<Object,Object> cartItemsMap = stringRedisTemplate.opsForHash().entries(""+userId);
+    public CartResponse getAllCartItems(String  userId) {
+
+        String key = CART_PREFIX + userId;
+        Map<Object,Object> redisMap = stringRedisTemplate.opsForHash().entries(key);
 
 
         CartResponse cartResponse = new CartResponse();
@@ -93,18 +105,18 @@ public class CartServiceImpl implements ICartService {
 
         List<CartItemResponse> cartItemResponses = new ArrayList<>();
         float amount = 0;
-        for (Map.Entry<Object,Object> entry : cartItemsMap.entrySet()) {
+        for (Map.Entry<Object,Object> entry : redisMap.entrySet()) {
           long itemId = Long.parseLong(entry.getKey().toString());
           int quantity = Integer.parseInt(entry.getValue().toString());
 
-          ItemResponse itemResponse = cartItems.get(""+userId).get(itemId);
-
+          ItemResponse itemResponse = cartItemsMap.get(userId).get(itemId);
+          log.info("Get Items for Item Id: "+itemId+" Quantity: "+quantity);
           CartItemResponse cartItemResponse = new CartItemResponse();
           cartItemResponse.setItemId(itemId);
           cartItemResponse.setQuantity(quantity);
           cartItemResponse.setItemName(itemResponse.getItemName());
-          cartItemResponse.setPrice((float) itemResponse.getAmount());
-          cartItemResponse.setTotalPrice((float) itemResponse.getAmount()*itemResponse.getQuantity());
+          cartItemResponse.setPrice( itemResponse.getAmount());
+          cartItemResponse.setTotalPrice(itemResponse.getAmount()*quantity);
 
           cartItemResponses.add(cartItemResponse);
 

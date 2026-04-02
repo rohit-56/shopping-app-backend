@@ -4,16 +4,16 @@ public class Cart {
 
     public int cartId;
 
-    public int itemId;
+    public long itemId;
 
-    public int userId;
+    public String userId;
     
     public int quantity;
 
     public Cart(){
 
     }
-    public Cart(int cartId, int itemId, int userId, int quantity){
+    public Cart(int cartId, int itemId, String userId, int quantity){
         this.cartId = cartId;
         this.itemId = itemId;
         this.userId = userId;
@@ -28,19 +28,19 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public int getItemId() {
+    public long getItemId() {
         return itemId;
     }
 
-    public void setItemId(int itemId) {
+    public void setItemId(long itemId) {
         this.itemId = itemId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
