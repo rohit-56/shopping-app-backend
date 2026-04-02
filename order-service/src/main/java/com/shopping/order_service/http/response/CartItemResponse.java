@@ -8,9 +8,9 @@ public class CartItemResponse {
 
     public int quantity;
 
-    public float price;
+    public double price;
 
-    public float totalPrice;
+    public double totalPrice;
 
     public void setItemId(long itemId) {
         this.itemId = itemId;
@@ -24,11 +24,11 @@ public class CartItemResponse {
         this.quantity = quantity;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

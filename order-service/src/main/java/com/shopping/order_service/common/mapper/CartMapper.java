@@ -13,9 +13,8 @@ public class CartMapper {
 
     public static final Function<CartRequest, Cart> fromCartRequestToCartEntity = cartRequest ->{
        Cart cart = new Cart();
-       //Currently setting item id to cart id, will update
-       cart.setCartId(cartRequest.getItemId());
-
+       //Currently setting cart id static value to 1, will update
+       cart.setCartId(1);
        cart.setItemId(cartRequest.getItemId());
        cart.setUserId(cartRequest.getUserId());
        cart.setQuantity(cartRequest.getQuantity());
