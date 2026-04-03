@@ -42,8 +42,19 @@ spring:
           filters:
             - StripPrefix=1
             - JwtValidation
+
+        # Route for /shop/** to order-service
+        - id: order-service-route
+          uri: http://localhost:4004
+          predicates:
+            - Path=/api/shop/**
+          filters:
+            - StripPrefix=1
+            - JwtValidation
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
+
+
 
 
 
