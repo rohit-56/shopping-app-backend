@@ -73,4 +73,18 @@ public class UserController {
     log.info("Ger All Users List Successfully");
     return new ResponseEntity<>(userEntityResponseList, HttpStatus.OK);
   }
+
+  @GetMapping("getUserById/{userId}")
+  public ResponseEntity<UserEntityResponse> getUserById(@PathVariable long userId) {
+    UserEntityResponse userEntityResponse = userService.getUserById(userId);
+    log.info("Get User Successfully");
+    return new ResponseEntity<>(userEntityResponse, HttpStatus.OK);
+  }
+
+  @GetMapping("getUserByEmail/{email}")
+  public ResponseEntity<UserEntityResponse> getUserById(@PathVariable String email) {
+    UserEntityResponse userEntityResponse = userService.getUserByEmail(email);
+    log.info("Get User Successfully");
+    return new ResponseEntity<>(userEntityResponse, HttpStatus.OK);
+  }
 }
