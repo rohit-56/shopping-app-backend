@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemEntityRepository extends JpaRepository<ItemEntity, Long> {
 
-  List<ItemEntity> findByCategoryType(CategoryType categoryType);
+  List<ItemEntity> findByCategoryType(String category);
 }
