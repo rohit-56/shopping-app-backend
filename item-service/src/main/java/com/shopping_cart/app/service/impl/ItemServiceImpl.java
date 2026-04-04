@@ -54,7 +54,7 @@ public class ItemServiceImpl implements IItemService {
   public List<ItemResponse> getItemsByCategory(String category) {
     log.info("Fetching items by category: {}", category);
     List<ItemEntity> itemEntityList =
-        itemEntityRepository.findByCategoryType(CategoryType.valueOf(category));
+        itemEntityRepository.findByCategoryType(category);
     List<ItemResponse> itemResponseList =
         itemEntityList.stream().map(ItemEntityMapper.fromItemEntityToItemResponse).toList();
     log.debug("Found {} items for category {}", itemResponseList.size(), category);
