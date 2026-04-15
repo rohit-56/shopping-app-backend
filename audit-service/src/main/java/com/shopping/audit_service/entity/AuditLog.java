@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@Document(collation = "audit_logs")
+@Document(collection = "audit_logs")
 public class AuditLog {
 
     @Id
