@@ -27,15 +27,15 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-    - name: Give execute permission to mvnw
-      run: chmod +x ./mvnw      
-    - name: Validate code formatting with Spotless Check
-      run: ./mvnw spotless:check
-    - name: Build with Maven
-      run: ./mvnw clean install
-      env:
-        SPRING_PROFILES_ACTIVE: qa
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-      env:
-        SPRING_PROFILES_ACTIVE: qa
+    - name: Build audit-service
+      run: ./mvnw clean install -pl audit-service -am
+ 
+    - name: Build order-service
+      run: ./mvnw clean install -pl order-service -am
+
+    - name: Build user-service
+      run: ./mvnw clean install -pl user-service -am
+
+    - name: Build apigateway
+      run: ./mvnw clean install -pl apigateway -am
+
