@@ -1,6 +1,5 @@
 package com.shopping_cart.app.service.impl;
 
-import com.shopping_cart.app.common.enums.CategoryType;
 import com.shopping_cart.app.common.mapper.ItemEntityMapper;
 import com.shopping_cart.app.http.request.ItemRequest;
 import com.shopping_cart.app.http.response.ItemResponse;
@@ -53,8 +52,7 @@ public class ItemServiceImpl implements IItemService {
   @Override
   public List<ItemResponse> getItemsByCategory(String category) {
     log.info("Fetching items by category: {}", category);
-    List<ItemEntity> itemEntityList =
-        itemEntityRepository.findByCategoryType(category);
+    List<ItemEntity> itemEntityList = itemEntityRepository.findByCategoryType(category);
     List<ItemResponse> itemResponseList =
         itemEntityList.stream().map(ItemEntityMapper.fromItemEntityToItemResponse).toList();
     log.debug("Found {} items for category {}", itemResponseList.size(), category);
@@ -79,7 +77,7 @@ public class ItemServiceImpl implements IItemService {
   public List<ItemResponse> getAllItems(int pageNumber, int pageSize) {
     log.info("Fetching all items");
 
-    Pageable pageable = PageRequest.of(pageNumber,pageSize, Sort.by("id").ascending());
+    Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("id").ascending());
 
     List<ItemEntity> itemEntityList = itemEntityRepository.findAll(pageable).getContent();
 
