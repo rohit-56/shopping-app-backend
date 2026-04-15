@@ -16,26 +16,21 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [order-service, item-service, user-service, audit-service, apigateway]
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-    - name: Build audit-service
-      run: ./mvnw clean install -pl audit-service -am
- 
-    - name: Build order-service
-      run: ./mvnw clean install -pl order-service -am
 
-    - name: Build user-service
-      run: ./mvnw clean install -pl user-service -am
-
-    - name: Build apigateway
-      run: ./mvnw clean install -pl apigateway -am
-
+    - name: Build with Maven
+      working-directory: ${{ matrix.service }}
+      run: mvn clean install
