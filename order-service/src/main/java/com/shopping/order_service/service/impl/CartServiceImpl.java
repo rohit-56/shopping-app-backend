@@ -33,9 +33,12 @@ public class CartServiceImpl implements ICartService {
 
     private HashMap<String,HashMap<Long, ItemResponse>> cartItemsMap = new HashMap<>();
 
-    public CartServiceImpl(StringRedisTemplate stringRedisTemplate, ItemServiceClient itemServiceClient) {
+    private final AuditKafkaProducerService auditKafkaProducerService;
+
+    public CartServiceImpl(StringRedisTemplate stringRedisTemplate, ItemServiceClient itemServiceClient, AuditKafkaProducerService auditKafkaProducerService) {
         this.stringRedisTemplate = stringRedisTemplate;
         this.itemServiceClient = itemServiceClient;
+        this.auditKafkaProducerService = auditKafkaProducerService;
     }
 
     @Override
@@ -63,6 +66,8 @@ public class CartServiceImpl implements ICartService {
 
                 cartItemsMap.put(cart.getUserId(),map);
             }
+
+            auditKafkaProducerService.sendAuditEvent("ITEM_ADDED_TO_CART",cartRequest,cartRequest.getUserId());
 
         }catch (Exception e){
             throw new HandleCartItemException("Failed to add item to cart.");
