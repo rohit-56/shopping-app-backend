@@ -56,7 +56,7 @@ Before running the application, ensure you have the following installed:
 - MongoDB 4.0+
 - Redis 6.0+
 - Apache Kafka 2.8+
-- Docker (optional, for containerized services)
+- Docker 
 
 ## 🔧 Installation & Setup
 
@@ -129,7 +129,7 @@ The API Gateway will be available at `http://localhost:4001`
 - User Service: 4002
 - Item Service: 4003
 - Order Service: 4004
-- Audit Service: Default Spring Boot port (8080)
+- Audit Service: 4005
 
 
 *This project showcases expertise in microservices architecture, Spring ecosystem, event-driven systems, and cloud-native development practices.*
