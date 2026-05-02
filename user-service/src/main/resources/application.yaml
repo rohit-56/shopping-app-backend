@@ -1,0 +1,20 @@
+server:
+  port: '4002'
+
+springdoc:
+  swagger-ui:
+    path: /user-swagger-ui
+  api-docs:
+    path: /test-api-docs
+jwt:
+  secret: Y2FwdGFpbndpbGx3aW5pbmRvY3RvcmRvb213aXRodGhvcmFuZERvY3RvclN0cmFuZ2U=
+
+spring:
+  application:
+    name: service
+  h2:
+    console:
+      path: /h2-console
+
+  profiles:
+    active: qa
