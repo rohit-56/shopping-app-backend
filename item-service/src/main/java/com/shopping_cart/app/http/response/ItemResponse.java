@@ -1,8 +1,10 @@
 package com.shopping_cart.app.http.response;
 
+import lombok.Getter;
 import lombok.Setter;
 
 @Setter
+@Getter
 public class ItemResponse {
 
   public Long itemId;

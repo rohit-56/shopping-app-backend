@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ItemController implements Serializable {
 
-  private IItemService itemService;
+  private final IItemService itemService;
+  private final ImageService imageService;
 
-  public ItemController(IItemService itemService) {
+  public ItemController(IItemService itemService, ImageService imageService) {
     this.itemService = itemService;
+    this.imageService = imageService;
   }
 
   @PostMapping(value = "/create-item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -33,7 +35,6 @@ public class ItemController implements Serializable {
 
     log.info("Create item request: {}", itemRequest.toString());
 
-    ImageService imageService = new ImageService();
     imageService.saveImageToStorage(
         "C:\\Users\\Diya Bharadwaj\\Downloads", itemRequest.getItemImage());
     ItemResponse itemResponse = itemService.createItem(itemRequest);
