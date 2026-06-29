@@ -51,23 +51,16 @@ public class EmailService {
       }
 
       for (ItemResponse itemResponse : entry.getValue()) {
-        builder.append("  - ")
+        builder
+            .append("  - ")
             .append(itemResponse.getItemName())
             .append(" (ID: ")
             .append(itemResponse.getItemId())
             .append(")\n");
-        builder.append("      Description: ")
-            .append(itemResponse.getDescription())
-            .append("\n");
-        builder.append("      Amount: ")
-            .append(itemResponse.getAmount())
-            .append("\n");
-        builder.append("      Rating: ")
-            .append(itemResponse.getRating())
-            .append("\n");
-        builder.append("      Quantity: ")
-            .append(itemResponse.getQuantity())
-            .append("\n\n");
+        builder.append("      Description: ").append(itemResponse.getDescription()).append("\n");
+        builder.append("      Amount: ").append(itemResponse.getAmount()).append("\n");
+        builder.append("      Rating: ").append(itemResponse.getRating()).append("\n");
+        builder.append("      Quantity: ").append(itemResponse.getQuantity()).append("\n\n");
       }
     }
 
